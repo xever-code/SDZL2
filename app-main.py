@@ -150,9 +150,7 @@ if uploaded_file is not None:
 st.write(st.session_state['data'])
 
 # Footer
-st.write(
-    "<p style='font-size: 12px;'>LBMD: Low Bone Mineral Density</p>",
-    unsafe_allow_html=True)
+
 st.write(
     "<p style='font-size: 12px;'>Disclaimer: This mini app is designed to provide general information and is not a substitute for professional medical advice or diagnosis. Always consult with a qualified healthcare professional if you have any concerns about your health.</p>",
     unsafe_allow_html=True)
