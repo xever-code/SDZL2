@@ -77,7 +77,8 @@ if st.sidebar.button("Submit"):
         if len(strlist[1]) == 0:
             result_prob_pos = 'The conditions do not match and cannot be predicted'
         else:
-            result_prob_pos = round(float(strlist[1]) * 100, 2)  # 预测概率
+            # result_prob_pos = round(float(strlist[1]) * 100, 2)  # 预测概率
+            result_prob_pos = float(strlist[1])  # 预测概率
     explainer = shap.TreeExplainer(mm)
     shap_values = explainer.shap_values(data2)
     shap_values = shap_values.reshape((1, -1))
