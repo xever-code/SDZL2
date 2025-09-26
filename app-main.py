@@ -16,7 +16,7 @@ vars=[ "p53","MAGE A1","SOX2","GBU4-5","Fg"]
 # 创建一个空的DataFrame来存储预测数据
 if 'data' not in st.session_state:
     st.session_state['data'] = pd.DataFrame(
-        columns=[vars[0], vars[1], vars[2], vars[3],vars[4],'Prediction','Label'])
+        columns=[vars[0], vars[1], vars[2], vars[3],vars[4],'Prediction Label','Label'])
 
 # 在主页面上显示数据
 st.header('Early diagnosis of pulmonary nodules based on the random forest model')
@@ -43,11 +43,11 @@ right_column.image('./logo.png', caption='', width=100)
 st.sidebar.header('输入参数')
 
 # Input bar 1
-a = st.sidebar.number_input(vars[0], min_value=0, max_value=1, value=1)
-b = st.sidebar.number_input(vars[1], min_value=0, max_value=1, value=1)
-c = st.sidebar.number_input(vars[2], min_value=0, max_value=1, value=1)
-d = st.sidebar.number_input(vars[3], min_value=0, max_value=1, value=1)
-e = st.sidebar.number_input(vars[4], min_value=0.0, max_value=10.0, value=2.3)
+a = st.sidebar.number_input(vars[0],value=0.0)
+b = st.sidebar.number_input(vars[1],value=0.0)
+c = st.sidebar.number_input(vars[2],value=1.0)
+d = st.sidebar.number_input(vars[3],value=1.0)
+e = st.sidebar.number_input(vars[4],value=0.0)
 
 
 
@@ -89,11 +89,12 @@ if st.sidebar.button("Submit"):
     # st.pyplot()
 
     # Output prediction
-    st.text(f"The probability of random_forest is: {str(result_prob_pos)}%")
+    # st.text(f"The probability of random_forest is: {str(result_prob_pos)}%")
+    st.text(f"This patient is classified as {str('healthy' if result_prob_pos <= 0.49 else 'diseased')}.")
     # st.text({str(shap_values[0])})
 
     # 创建一个新的DataFrame来存储用户输入的数据
-    new_data = pd.DataFrame([[a, b, c,d,e,  result_prob_pos / 100, None]],
+    new_data = pd.DataFrame([[a, b, c,d,e,  0 if result_prob_pos <= 0.49 else 1, None]],
                             columns=st.session_state['data'].columns)
 
     # 将预测结果添加到新数据中
@@ -136,7 +137,9 @@ if uploaded_file is not None:
 
             # 进行预测
             result = mm.predict(X)[0]
+            #result_prob = mm.predict_proba(X)[0][1]
             result_prob = mm.predict_proba(X)[0][1]
+            result_prob= 0 if result_prob <= 0.49 else 1
 
             # 获取标签列的值
             label = row[label_column] if label_column in row else None
