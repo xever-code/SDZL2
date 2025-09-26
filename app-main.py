@@ -45,8 +45,8 @@ st.sidebar.header('输入参数')
 # Input bar 1
 a = st.sidebar.number_input(vars[0],value=0.0)
 b = st.sidebar.number_input(vars[1],value=0.0)
-c = st.sidebar.number_input(vars[2],value=1.0)
-d = st.sidebar.number_input(vars[3],value=1.0)
+c = st.sidebar.number_input(vars[2],value=0.0)
+d = st.sidebar.number_input(vars[3],value=0.0)
 e = st.sidebar.number_input(vars[4],value=0.0)
 
 
